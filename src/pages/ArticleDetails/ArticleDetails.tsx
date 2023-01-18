@@ -5,7 +5,6 @@ import { IMG_BASE_URL } from 'constants/themoviedb';
 import { getArticleById } from 'services/api-themoviedb';
 import { OverviewText, PosterImg } from './ArticleDetails.styled';
 
-
 interface IData {
   title: string;
   overview: string;
@@ -30,7 +29,6 @@ const ArticleDetails: React.FC = () => {
   const backRef = location.state?.from ?? '/home';
   return (
     <>
-      <Link to={backRef}>Go back</Link>
       <h1>Article details...</h1>
       <h2>Some details</h2>
       {article && (
@@ -50,6 +48,7 @@ const ArticleDetails: React.FC = () => {
           </div>
         </>
       )}
+      <Link to={backRef}>Go back</Link>
     </>
   );
 };
