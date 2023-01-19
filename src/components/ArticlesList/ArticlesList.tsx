@@ -2,15 +2,13 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { ArticleCard } from './ArticleCard/ArticleCard';
 
+import { IArticle } from 'interfaces';
+
 interface IProps {
   articles: IArticle[];
 }
 
-interface IArticle {
-  id: number;
-  title: string;
-  overview: string;
-}
+
 
 export const ArticlesList: React.FC<IProps> = ({ articles }) => {
   const location = useLocation();

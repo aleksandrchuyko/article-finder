@@ -6,7 +6,7 @@ import { ArticlesList } from 'components/ArticlesList/ArticlesList';
 import { Filter } from 'components/Filter/Filter';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter, setFilter } from 'redux/filter-slice';
+import { getFilter, setFilter, getKeywords, setKeywords } from 'redux/filter-slice';
 import { useGetAllArticlesQuery } from 'redux/articles-api';
 
 import { initialArticles } from 'constants/initialArticles';
@@ -16,11 +16,13 @@ import { findByKeywords } from 'helpers';
 
 const Articles: React.FC = () => {
   const dispatch = useDispatch();
-  const [filterInput, setFilterInput] = useState('');
+  // const [filterInput, setFilterInput] = useState('');
   const [foundedArticles, setFoundedArticles] = useState<IArticle[]>([]);
+  const keywords = useSelector(getKeywords);
   const filter = useSelector(getFilter);
 
   const { data, isLoading } = useGetAllArticlesQuery('');
+  
 
   useEffect(() => {
     let articles: IArticle[] = Array.isArray(data?.results)
@@ -37,33 +39,29 @@ const Articles: React.FC = () => {
       };
     });
     setFoundedArticles(articles);
-  }, [data, filter]);
+  }, [data, keywords]);
 
   // eslint-disable-next-line
   const debouncedEventHandler = useCallback(
     debounce((filterInput) => {
       let filterSplit: string[] = filterInput.trim().split(' ');
       filterSplit = filterSplit.map((word) => word.trim().toLowerCase());
-      dispatch(setFilter(filterSplit));
+      dispatch(setKeywords(filterSplit));
     }, 1000),
     []
   );
 
   useEffect(() => {
-    debouncedEventHandler(filterInput);
-  }, [debouncedEventHandler, filterInput]);
+    debouncedEventHandler(filter);
+  }, [debouncedEventHandler, filter]);
 
   const updateFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterInput(e.target.value);
+    dispatch(setFilter(e.target.value));
   };
 
-  
-
-  
-
   const filtered = useMemo(
-    () => findByKeywords(filter, foundedArticles),
-    [filter, foundedArticles]
+    () => findByKeywords(keywords, foundedArticles),
+    [keywords, foundedArticles]
   );
 
   return (
@@ -71,7 +69,7 @@ const Articles: React.FC = () => {
       <h1>Articles page</h1>
       {!isLoading && (
         <div>
-          <Filter name={filterInput} onChange={updateFilter} />
+          <Filter name={filter} onChange={updateFilter} />
           <p>Results: {filtered.length}</p>
           <hr />
           <ArticlesList articles={filtered} />
