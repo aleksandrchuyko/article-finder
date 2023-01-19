@@ -39,6 +39,7 @@ const Articles: React.FC = () => {
     setFoundedArticles(articles);
   }, [data, filter]);
 
+  // eslint-disable-next-line
   const debouncedEventHandler = useCallback(
     debounce((filterInput) => {
       let filterSplit: string[] = filterInput.trim().split(' ');
