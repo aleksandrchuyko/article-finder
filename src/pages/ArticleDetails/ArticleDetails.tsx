@@ -5,16 +5,13 @@ import { IMG_BASE_URL } from 'constants/themoviedb';
 import { getArticleById } from 'services/api-themoviedb';
 import { OverviewText, PosterImg } from './ArticleDetails.styled';
 
-interface IData {
-  title: string;
-  overview: string;
-  poster_path: string;
-}
+import { IArticle } from 'interfaces';
+
 
 const ArticleDetails: React.FC = () => {
   const { articleId } = useParams();
   const location = useLocation();
-  const [article, setArticle] = useState<Partial<IData>>({});
+  const [article, setArticle] = useState<Partial<IArticle>>({});
 
   useEffect(() => {
     if (articleId) {

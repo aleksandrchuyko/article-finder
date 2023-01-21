@@ -26,6 +26,7 @@ export const findByKeywords = (
 				id: article.id,
 				title,
 				overview: article?.overview,
+				poster_path: article?.poster_path
 			},
 		];
 	}, []);
@@ -48,6 +49,7 @@ export const findByKeywords = (
 				id: article.id,
 				title: article?.title,
 				overview,
+				poster_path: article?.poster_path
 			},
 		];
 	}, []);

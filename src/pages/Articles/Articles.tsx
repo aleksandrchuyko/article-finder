@@ -2,11 +2,18 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 
 import debounce from 'lodash.debounce';
 
+import { Container, Typography } from '@mui/material';
+
 import { ArticlesList } from 'components/ArticlesList/ArticlesList';
 import { Filter } from 'components/Filter/Filter';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter, setFilter, getKeywords, setKeywords } from 'redux/filter-slice';
+import {
+  getFilter,
+  setFilter,
+  getKeywords,
+  setKeywords,
+} from 'redux/filter-slice';
 import { useGetAllArticlesQuery } from 'redux/articles-api';
 
 import { initialArticles } from 'constants/initialArticles';
@@ -22,7 +29,6 @@ const Articles: React.FC = () => {
   const filter = useSelector(getFilter);
 
   const { data, isLoading } = useGetAllArticlesQuery('');
-  
 
   useEffect(() => {
     let articles: IArticle[] = Array.isArray(data?.results)
@@ -36,6 +42,7 @@ const Articles: React.FC = () => {
           item.overview.length < 100
             ? item.overview + '...'
             : item.overview.substring(0, 100) + '...',
+        poster_path: item.poster_path,
       };
     });
     setFoundedArticles(articles);
@@ -65,17 +72,19 @@ const Articles: React.FC = () => {
   );
 
   return (
-    <>
-      <h1>Articles page</h1>
+    <main>
+      <Filter name={filter} onChange={updateFilter} />
+
       {!isLoading && (
-        <div>
-          <Filter name={filter} onChange={updateFilter} />
-          <p>Results: {filtered.length}</p>
+        <Container sx={{ py: 2 }} maxWidth='md'>
+          <Typography sx={{ m: '0', fontSize: '0.85rem' }} variant='h6' align='left' paragraph>
+            Results: {filtered.length}
+          </Typography>
           <hr />
           <ArticlesList articles={filtered} />
-        </div>
+        </Container>
       )}
-    </>
+    </main>
   );
 };
 
