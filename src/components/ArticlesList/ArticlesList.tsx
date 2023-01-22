@@ -1,4 +1,4 @@
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
@@ -11,7 +11,6 @@ interface IProps {
 }
 
 export const ArticlesList: React.FC<IProps> = ({ articles }) => {
-  
   return (
     <Grid container spacing={4}>
       {articles.map((article) => (

@@ -20,8 +20,5 @@ export const filterSlice = createSlice({
 
 export const { setFilter, setKeywords } = filterSlice.actions;
 
-//export const filterReducer = filterSlice.reducer;
-
-//selectors
 export const getFilter = (state) => state.filter.filter;
 export const getKeywords = (state) => state.filter.keywords;

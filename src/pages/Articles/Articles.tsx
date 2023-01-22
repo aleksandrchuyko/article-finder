@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useEffect, useMemo, useCallback } from 'react';
 
 import debounce from 'lodash.debounce';
 
@@ -14,40 +14,20 @@ import {
   getKeywords,
   setKeywords,
 } from 'redux/filter-slice';
-import { useGetAllArticlesQuery } from 'redux/articles-api';
 
-import { initialArticles } from 'constants/initialArticles';
+import { useArticles } from 'hooks';
 
-import { IArticle } from 'interfaces';
 import { findByKeywords } from 'helpers';
 
 const Articles: React.FC = () => {
+  const {isLoading, foundedArticles} = useArticles();
   const dispatch = useDispatch();
-  // const [filterInput, setFilterInput] = useState('');
-  const [foundedArticles, setFoundedArticles] = useState<IArticle[]>([]);
+  
+  
   const keywords = useSelector(getKeywords);
   const filter = useSelector(getFilter);
 
-  const { data, isLoading } = useGetAllArticlesQuery('');
-
-  useEffect(() => {
-    let articles: IArticle[] = Array.isArray(data?.results)
-      ? data?.results
-      : initialArticles;
-    articles = articles.map<IArticle>((item) => {
-      return {
-        id: item.id,
-        title: item.title,
-        overview:
-          item.overview.length < 100
-            ? item.overview + '...'
-            : item.overview.substring(0, 100) + '...',
-        poster_path: item.poster_path,
-      };
-    });
-    setFoundedArticles(articles);
-  }, [data, keywords]);
-
+  
   // eslint-disable-next-line
   const debouncedEventHandler = useCallback(
     debounce((filterInput) => {
@@ -77,7 +57,12 @@ const Articles: React.FC = () => {
 
       {!isLoading && (
         <Container sx={{ py: 2 }} maxWidth='md'>
-          <Typography sx={{ m: '0', fontSize: '0.85rem' }} variant='h6' align='left' paragraph>
+          <Typography
+            sx={{ m: '0', fontSize: '0.85rem' }}
+            variant='h6'
+            align='left'
+            paragraph
+          >
             Results: {filtered.length}
           </Typography>
           <hr />

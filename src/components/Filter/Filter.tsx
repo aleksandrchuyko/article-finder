@@ -18,12 +18,11 @@ export const Filter: React.FC<IProps> = ({ name, onChange }) => {
           variant='h6'
           component='label'
           htmlFor='find'
-          
         >
           Filter by keywords
         </Typography>
         <TextField
-        sx={{p: '0'}}
+          sx={{ p: '0' }}
           type='search'
           name='find'
           autoFocus
