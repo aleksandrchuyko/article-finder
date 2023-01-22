@@ -1,10 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const OverviewText = styled.p`
-padding: 10px 5px;
-`;
+import { Box } from '@mui/material';
 
-export const PosterImg = styled.img`
-width: 250px;
-height: auto;
+export const TopDecoration = styled(Box)`
+  width: 100%;
+  height: 245px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
 `;

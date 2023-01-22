@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 import Grid from '@mui/material/Grid';
 
@@ -11,7 +11,7 @@ interface IProps {
 }
 
 export const ArticlesList: React.FC<IProps> = ({ articles }) => {
-  const location = useLocation();
+  
   return (
     <Grid container spacing={4}>
       {articles.map((article) => (
@@ -19,7 +19,6 @@ export const ArticlesList: React.FC<IProps> = ({ articles }) => {
           <Link
             style={{ textDecoration: 'none', color: 'black' }}
             to={`${article.id}`}
-            state={{ from: location }}
           >
             <ArticleCard article={article} />
           </Link>
