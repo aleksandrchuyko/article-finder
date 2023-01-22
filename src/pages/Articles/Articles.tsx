@@ -20,14 +20,12 @@ import { useArticles } from 'hooks';
 import { findByKeywords } from 'helpers';
 
 const Articles: React.FC = () => {
-  const {isLoading, foundedArticles} = useArticles();
+  const { isLoading, foundedArticles } = useArticles();
   const dispatch = useDispatch();
-  
-  
+
   const keywords = useSelector(getKeywords);
   const filter = useSelector(getFilter);
 
-  
   // eslint-disable-next-line
   const debouncedEventHandler = useCallback(
     debounce((filterInput) => {
